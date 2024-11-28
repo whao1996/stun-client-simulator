@@ -7,8 +7,8 @@ logging:
   level:
     com.paraam.cpeagent: ${LOG_LEVEL:info}
 simulator:
-  device_number: ${DEVICE_NUMBER:10}
-  netty_thread: ${NETTY_THREAD:16}
+  device_number: ${DEVICE_NUMBER:50000}
+  netty_thread: ${NETTY_THREAD:128}
   stun:
     enabled: ${STUN_ENABLED:true}
     host: ${STUN_HOST:127.0.0.1}

@@ -11,24 +11,26 @@ services:
       - SYS_PTRACE
     environment:
       LOG_LEVEL: info
-      DEVICE_NUMBER: 50000
+      DEVICE_NUMBER: 200000
+      NETTY_THREAD: 128
+      BOOT_THREAD: 32
       STUN_ENABLED: true
       STUN_HOST: 127.0.0.1
       STUN_PORT: 3478
       STUN_USERNAME: ""
       STUN_PASSWORD: ""
       STUN_HEARTBEAT_INTERVAL: 5
-      STUN_THREAD: 64
+      STUN_THREAD: 16
       JAVA_OPTS: >-
-        -Xmx600M
-        -Xms600M
-        -Xmn200M
-        -XX:MaxMetaspaceSize=100M
-        -XX:MetaspaceSize=100M
+        -Xmx6G
+        -Xms6G
+        -Xmn2G
+        -XX:MaxMetaspaceSize=300M
+        -XX:MetaspaceSize=300M
         -XX:+UseG1GC
     deploy:
       resources:
         limits:
-          memory: 1G
+          memory: 8G
         reservations:
-          memory: 1G
+          memory: 8G

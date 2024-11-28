@@ -59,6 +59,7 @@ public class StunClient {
             bootstrap.group(GROUP)
                     .channel(NioDatagramChannel.class)
                     .option(ChannelOption.SO_BROADCAST, true) // 允许广播
+                    .option(ChannelOption.SO_REUSEADDR, true) // 允许广播
                     .handler(new ChannelInitializer<DatagramChannel>() {
                         @Override
                         public void initChannel(DatagramChannel ch) throws Exception {
