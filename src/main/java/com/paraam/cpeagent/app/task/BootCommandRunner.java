@@ -44,11 +44,16 @@ public class BootCommandRunner implements CommandLineRunner {
         if (stunThread != null) {
             BOOT_THREADS = Integer.parseInt(stunThread);
         }
+        Integer QUEUE_CAPACITY = 1000000;
+        String stunThreadStr = System.getenv("QUEUE_CAPACITY");
+        if (stunThreadStr != null) {
+            BOOT_THREADS = Integer.parseInt(stunThreadStr);
+        }
         THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(BOOT_THREADS,
                 BOOT_THREADS,
                 60,
                 java.util.concurrent.TimeUnit.SECONDS,
-                new java.util.concurrent.ArrayBlockingQueue<>(1000000),
+                new java.util.concurrent.ArrayBlockingQueue<>(QUEUE_CAPACITY),
                 new ThreadPoolExecutor.AbortPolicy());
     }
     @Override

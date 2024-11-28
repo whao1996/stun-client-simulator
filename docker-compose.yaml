@@ -10,8 +10,9 @@ services:
     cap_add:
       - SYS_PTRACE
     environment:
-      LOG_LEVEL: info
+      LOG_LEVEL: debug
       DEVICE_NUMBER: 200000
+      QUEUE_CAPACITY: 1000000
       NETTY_THREAD: 128
       BOOT_THREAD: 32
       STUN_ENABLED: true
@@ -19,7 +20,7 @@ services:
       STUN_PORT: 3478
       STUN_USERNAME: ""
       STUN_PASSWORD: ""
-      STUN_HEARTBEAT_INTERVAL: 5
+      STUN_HEARTBEAT_INTERVAL: 1
       STUN_THREAD: 16
       JAVA_OPTS: >-
         -Xmx6G
