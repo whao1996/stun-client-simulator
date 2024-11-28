@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: stun-client-simulator
+server:
+  port: 8060
+logging:
+  level:
+    com.paraam.cpeagent: ${LOG_LEVEL:info}
+simulator:
+  device_number: ${DEVICE_NUMBER:10}
+  netty_thread: ${NETTY_THREAD:16}
+  stun:
+    enabled: ${STUN_ENABLED:true}
+    host: ${STUN_HOST:127.0.0.1}
+    port: ${STUN_PORT:3478}
+    username: ${STUN_USERNAME:""}
+    password: ${STUN_PASSWORD:""}
+    heartbeatInterval: ${STUN_HEARTBEAT_INTERVAL:1}
+    thread: ${STUN_THREAD:16}
+
+
+
+

@@ -1,0 +1,78 @@
+package com.paraam.cpeagent.app.task;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.paraam.cpeagent.infra.core.CPEClient;
+import com.paraam.cpeagent.infra.properties.STUNConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
+
+/**
+ * 〈功能简述〉
+ * 〈〉
+ *
+ * @author wanghao
+ * @since 2024/10/25 9:54
+ */
+@Component
+public class BootCommandRunner implements CommandLineRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BootCommandRunner.class);
+
+    @Autowired
+    @Qualifier("bootInformTaskExecutor")
+    private TaskExecutor bootInformTaskExecutor;
+    @Value("${simulator.device_number}")
+    private Integer deviceNumber;
+
+    @Autowired
+    private STUNConfig stunConfig;
+
+    @Override
+    public void run(String... args) {
+        List<CPEClient> cpeClientList = new ArrayList<>();
+        for (int i = 0; i < deviceNumber; i++) {
+            CPEClient cpeClient = new CPEClient();
+            cpeClient.setStunConfig(stunConfig);
+            cpeClientList.add(cpeClient);
+        }
+
+        CountDownLatch countDownLatch = new CountDownLatch(cpeClientList.size());
+        AtomicInteger successCount = new AtomicInteger(0);
+        AtomicInteger failedCount = new AtomicInteger(0);
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>Start Boot CPE device: Device count: {}<<<<<<<<<<<<<<<<<<<<<", cpeClientList.size());
+        // 初始化设备
+        for (CPEClient cpeClient : cpeClientList) {
+            bootInformTaskExecutor.execute(() -> {
+                try {
+                    cpeClient.bootstrap();
+                    successCount.getAndIncrement();
+                } catch (Exception e) {
+                    LOGGER.error("Init CPE client failed.", e);
+                    failedCount.getAndIncrement();
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        // 等待设备启动完成
+        try {
+            countDownLatch.await();
+            stopWatch.stop();
+            LOGGER.info(">>>>>>>>>>>>>>>>>>>End Boot CPE device: Success count: {},failed count: {}, cost time: {}s<<<<<<<<<<<<<<<<<<<<<", successCount.get(), failedCount.get(), stopWatch.getTotalTimeSeconds());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
