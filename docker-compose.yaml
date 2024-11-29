@@ -1,7 +1,7 @@
 # docker-compose.yaml
 version: "3"
 services:
-  tr069-simulator:
+  stun-client-simulator:
     container_name: stun-client
     image: stun-client:1.0.0
 #    network_mode: host
