@@ -4,9 +4,11 @@ services:
   tr069-simulator:
     container_name: stun-client
     image: stun-client:1.0.0
-    network_mode: host
-#    sysctls:
-#      net.ipv4.ip_local_port_range: "10000 65000"
+#    network_mode: host
+    sysctls:
+      net.ipv4.ip_local_port_range: "10000 65000"
+#    ports:
+#      - "65530:65530/udp"
     cap_add:
       - SYS_PTRACE
     environment:

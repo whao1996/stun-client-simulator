@@ -10,7 +10,6 @@ simulator:
   device_number: ${DEVICE_NUMBER:50000}
   netty_thread: ${NETTY_THREAD:128}
   stun:
-    enabled: ${STUN_ENABLED:true}
     host: ${STUN_HOST:127.0.0.1}
     port: ${STUN_PORT:3478}
     username: ${STUN_USERNAME:""}

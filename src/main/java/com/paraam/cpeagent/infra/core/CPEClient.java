@@ -28,16 +28,14 @@ public class CPEClient {
     public void setStunConfig(STUNConfig stunConfig) {
         this.stunConfig = stunConfig;
     }
-    public void bootstrap() {
 
-        if (Boolean.TRUE.equals(this.stunConfig.getEnabled())) {
-            StunClient stunClient = new StunClient(stunConfig, this);
-            this.setStunClient(stunClient);
-            stunClient.connect();
-            stunClient.sendBindRequest();
-            ApplicationContextHelper.getBean(CPEUtil.class)
-                    .stunHeartBeatTask(this,
-                            getStunConfig().getHeartbeatInterval());
-        }
+    public void bootstrap() {
+        StunClient stunClient = new StunClient(stunConfig, this);
+        this.setStunClient(stunClient);
+        stunClient.connect();
+        stunClient.sendBindRequest();
+        ApplicationContextHelper.getBean(CPEUtil.class)
+                .stunHeartBeatTask(this,
+                        getStunConfig().getHeartbeatInterval());
     }
 }

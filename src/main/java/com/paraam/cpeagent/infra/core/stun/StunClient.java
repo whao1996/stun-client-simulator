@@ -68,7 +68,7 @@ public class StunClient {
                         }
                     });
             ChannelFuture future = bootstrap
-                    //                    .bind(65530).sync().channel()
+//                                        .bind(65530).sync().channel()
                     .connect(new InetSocketAddress(stunConfig.getHost(), stunConfig.getPort())).sync();
             channel = future.channel();
             InetSocketAddress inetSocketAddress = (InetSocketAddress) channel.localAddress();
