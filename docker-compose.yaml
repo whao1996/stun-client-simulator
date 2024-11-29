@@ -10,7 +10,7 @@ services:
     cap_add:
       - SYS_PTRACE
     environment:
-      LOG_LEVEL: debug
+      LOG_LEVEL: info
       DEVICE_NUMBER: 200000
       QUEUE_CAPACITY: 1000000
       NETTY_THREAD: 128
