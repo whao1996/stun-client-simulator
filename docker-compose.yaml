@@ -29,9 +29,9 @@ services:
         -XX:MaxMetaspaceSize=300M
         -XX:MetaspaceSize=300M
         -XX:+UseG1GC
-    deploy:
-      resources:
-        limits:
-          memory: 8G
-        reservations:
-          memory: 8G
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 8G
+#        reservations:
+#          memory: 8G

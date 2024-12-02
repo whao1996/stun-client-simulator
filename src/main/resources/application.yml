@@ -5,7 +5,7 @@ server:
   port: 8060
 logging:
   level:
-    com.paraam.cpeagent: ${LOG_LEVEL:info}
+    io.change.stun: ${LOG_LEVEL:info}
 simulator:
   device_number: ${DEVICE_NUMBER:50000}
   netty_thread: ${NETTY_THREAD:128}
@@ -14,7 +14,7 @@ simulator:
     port: ${STUN_PORT:3478}
     username: ${STUN_USERNAME:""}
     password: ${STUN_PASSWORD:""}
-    heartbeatInterval: ${STUN_HEARTBEAT_INTERVAL:1}
+    heartbeatInterval: ${STUN_HEARTBEAT_INTERVAL:30}
     thread: ${STUN_THREAD:16}
 
 
