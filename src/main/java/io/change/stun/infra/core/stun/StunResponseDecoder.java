@@ -1,4 +1,4 @@
-package com.paraam.cpeagent.infra.core.stun;
+package io.change.stun.infra.core.stun;
 
 import de.javawi.jstun.header.MessageHeader;
 import io.netty.buffer.ByteBuf;

@@ -1,9 +1,9 @@
-package com.paraam.cpeagent.infra.util;
+package io.change.stun.infra.util;
 
 import java.time.Instant;
 import java.util.Date;
 
-import com.paraam.cpeagent.infra.core.CPEClient;
+import io.change.stun.infra.core.CPEClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
-package com.paraam.cpeagent.infra.core.stun;
+package io.change.stun.infra.core.stun;
 
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 
-import com.paraam.cpeagent.infra.core.CPEClient;
-import com.paraam.cpeagent.infra.properties.STUNConfig;
+import io.change.stun.infra.core.CPEClient;
+import io.change.stun.infra.properties.STUNConfig;
 import de.javawi.jstun.attribute.ChangeRequest;
 import de.javawi.jstun.attribute.ConnectionRequestBinding;
 import de.javawi.jstun.attribute.Password;
@@ -21,7 +21,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.NettyRuntime;
-import io.netty.util.internal.SystemPropertyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +58,7 @@ public class StunClient {
             bootstrap.group(GROUP)
                     .channel(NioDatagramChannel.class)
                     .option(ChannelOption.SO_BROADCAST, true) // 允许广播
+                    .option(ChannelOption.SO_REUSEADDR, true) // 允许广播
                     .handler(new ChannelInitializer<DatagramChannel>() {
                         @Override
                         public void initChannel(DatagramChannel ch) throws Exception {
@@ -67,7 +67,7 @@ public class StunClient {
                         }
                     });
             ChannelFuture future = bootstrap
-                    //                    .bind(65530).sync().channel()
+//                                        .bind(65530).sync().channel()
                     .connect(new InetSocketAddress(stunConfig.getHost(), stunConfig.getPort())).sync();
             channel = future.channel();
             InetSocketAddress inetSocketAddress = (InetSocketAddress) channel.localAddress();

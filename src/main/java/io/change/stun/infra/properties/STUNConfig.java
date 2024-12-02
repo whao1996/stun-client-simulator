@@ -1,4 +1,4 @@
-package com.paraam.cpeagent.infra.properties;
+package io.change.stun.infra.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "simulator.stun")
 public class STUNConfig {
-    private Boolean enabled;
     private String host;
     private Integer port;
     private String username;
@@ -26,14 +25,6 @@ public class STUNConfig {
 
     public void setHeartbeatInterval(Long heartbeatInterval) {
         this.heartbeatInterval = heartbeatInterval;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getHost() {

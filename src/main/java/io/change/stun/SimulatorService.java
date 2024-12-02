@@ -1,4 +1,4 @@
-package com.paraam.cpeagent;
+package io.change.stun;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

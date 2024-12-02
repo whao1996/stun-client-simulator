@@ -1,19 +1,19 @@
-package com.paraam.cpeagent.app.task;
+package io.change.stun.app.task;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.paraam.cpeagent.infra.core.CPEClient;
-import com.paraam.cpeagent.infra.properties.STUNConfig;
+import io.change.stun.infra.core.CPEClient;
+import io.change.stun.infra.properties.STUNConfig;
+import io.netty.util.NettyRuntime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -28,15 +28,32 @@ import org.springframework.util.StopWatch;
 public class BootCommandRunner implements CommandLineRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(BootCommandRunner.class);
 
-    @Autowired
-    @Qualifier("bootInformTaskExecutor")
-    private TaskExecutor bootInformTaskExecutor;
+    private static final ThreadPoolExecutor THREAD_POOL_EXECUTOR;
+
     @Value("${simulator.device_number}")
     private Integer deviceNumber;
 
     @Autowired
     private STUNConfig stunConfig;
 
+    static {
+        Integer BOOT_THREADS = NettyRuntime.availableProcessors() * 2;
+        String stunThread = System.getenv("BOOT_THREAD");
+        if (stunThread != null) {
+            BOOT_THREADS = Integer.parseInt(stunThread);
+        }
+        Integer QUEUE_CAPACITY = 1000000;
+        String stunThreadStr = System.getenv("QUEUE_CAPACITY");
+        if (stunThreadStr != null) {
+            BOOT_THREADS = Integer.parseInt(stunThreadStr);
+        }
+        THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(BOOT_THREADS,
+                BOOT_THREADS,
+                60,
+                java.util.concurrent.TimeUnit.SECONDS,
+                new java.util.concurrent.ArrayBlockingQueue<>(QUEUE_CAPACITY),
+                new ThreadPoolExecutor.AbortPolicy());
+    }
     @Override
     public void run(String... args) {
         List<CPEClient> cpeClientList = new ArrayList<>();
@@ -54,7 +71,7 @@ public class BootCommandRunner implements CommandLineRunner {
         LOGGER.info(">>>>>>>>>>>>>>>>>>>Start Boot CPE device: Device count: {}<<<<<<<<<<<<<<<<<<<<<", cpeClientList.size());
         // 初始化设备
         for (CPEClient cpeClient : cpeClientList) {
-            bootInformTaskExecutor.execute(() -> {
+            THREAD_POOL_EXECUTOR.execute(() -> {
                 try {
                     cpeClient.bootstrap();
                     successCount.getAndIncrement();
@@ -71,6 +88,7 @@ public class BootCommandRunner implements CommandLineRunner {
             countDownLatch.await();
             stopWatch.stop();
             LOGGER.info(">>>>>>>>>>>>>>>>>>>End Boot CPE device: Success count: {},failed count: {}, cost time: {}s<<<<<<<<<<<<<<<<<<<<<", successCount.get(), failedCount.get(), stopWatch.getTotalTimeSeconds());
+            THREAD_POOL_EXECUTOR.shutdown();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
