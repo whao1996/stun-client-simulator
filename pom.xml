@@ -7,10 +7,10 @@
         <version>2.7.18</version>
     </parent>
 
-	<groupId>tr069</groupId>
+	<groupId>io.change</groupId>
 	<artifactId>stun-client</artifactId>
-	<version>0.6.2</version>
-	<name>TR069 Simulator</name>
+	<version>1.0.0</version>
+	<name>TR069 STUN Client Simulator</name>
 
     <dependencies>
         <dependency>

@@ -1,15 +1,11 @@
-package com.paraam.cpeagent.infra.core.stun;
+package io.change.stun.infra.core.stun;
 
-import java.util.Map;
-
-import com.paraam.cpeagent.infra.core.CPEClient;
+import io.change.stun.infra.core.CPEClient;
 import de.javawi.jstun.attribute.MappedAddress;
 import de.javawi.jstun.attribute.MessageAttribute;
-import de.javawi.jstun.attribute.MessageAttributeInterface;
 import de.javawi.jstun.header.MessageHeader;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.buffer.ByteBuf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

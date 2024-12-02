@@ -1,4 +1,4 @@
-package com.paraam.cpeagent.infra.properties;
+package io.change.stun.infra.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

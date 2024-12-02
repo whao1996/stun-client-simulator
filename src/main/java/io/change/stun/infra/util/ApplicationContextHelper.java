@@ -1,4 +1,4 @@
-package com.paraam.cpeagent.infra.util;
+package io.change.stun.infra.util;
 
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;

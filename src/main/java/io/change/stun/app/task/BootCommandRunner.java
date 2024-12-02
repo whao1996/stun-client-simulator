@@ -1,4 +1,4 @@
-package com.paraam.cpeagent.app.task;
+package io.change.stun.app.task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,16 +6,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.paraam.cpeagent.infra.core.CPEClient;
-import com.paraam.cpeagent.infra.properties.STUNConfig;
+import io.change.stun.infra.core.CPEClient;
+import io.change.stun.infra.properties.STUNConfig;
 import io.netty.util.NettyRuntime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 

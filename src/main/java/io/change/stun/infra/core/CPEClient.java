@@ -1,9 +1,9 @@
-package com.paraam.cpeagent.infra.core;
+package io.change.stun.infra.core;
 
-import com.paraam.cpeagent.infra.core.stun.StunClient;
-import com.paraam.cpeagent.infra.properties.STUNConfig;
-import com.paraam.cpeagent.infra.util.ApplicationContextHelper;
-import com.paraam.cpeagent.infra.util.CPEUtil;
+import io.change.stun.infra.core.stun.StunClient;
+import io.change.stun.infra.properties.STUNConfig;
+import io.change.stun.infra.util.ApplicationContextHelper;
+import io.change.stun.infra.util.CPEUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
